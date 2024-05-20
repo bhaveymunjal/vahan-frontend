@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function AddingEntity() {
   const apiUrl = import.meta.env.VITE_BACKEND_URL;
   const [entityName, setEntityName] = useState("");
   const [attributes, setAttributes] = useState([{ name: "", type: "string" }]);
-
+  const navigate = useNavigate();
+  
   const addAttribute = () => {
     setAttributes([...attributes, { name: "", type: "string" }]);
   };
@@ -29,6 +31,7 @@ export default function AddingEntity() {
       });
       console.log(response.data);
       toast.success("Entity created successfully.");
+      navigate(`/entity/${entityName}`);
     } catch (error) {
       console.error("Error creating entity:", error);
       toast.error("Error creating entity");
